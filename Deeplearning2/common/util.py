@@ -1,3 +1,5 @@
+import numpy as np
+
 def preprocess(text):
     text = text.lower()
     text = text.replace('.', ' .')
