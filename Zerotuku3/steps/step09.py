@@ -79,7 +79,7 @@ def numerical_diff(f, x, eps=1e-4):
     return (y1.data - y0.data) / (2 * eps)
 
 
-# x = Variable(np.array(0.5))
+x = Variable(np.array(0.5))
 # x = Variable(None) #test
 # x = Variable(1.0) #test
 y = square(exp(square(x)))
