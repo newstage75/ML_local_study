@@ -8,6 +8,13 @@ class Variable:
         
     def set_creator(self, func):
         self.creator = func
+        
+    def backward(self):
+        f = self.creator # Get the function which created this variable
+        if f is not None:
+            x = f.input # Get the input of the function
+            x.grad = f.backward(self.grad) # Call the backward method of the function
+            x.backward() # Call the backward method of the input variable(recursive：再帰)
 
 
 class Function:
@@ -62,10 +69,15 @@ a = A(x)
 b = B(a)
 y = C(b)
 
-#逆向きに計算グラフのノードを辿る
+#逆向きに計算グラフのノードを辿る（テスト）
 assert y.creator == C
 assert y.creator.input == b
 assert y.creator.input.creator == B
 assert y.creator.input.creator.input == a
 assert y.creator.input.creator.input.creator == A
 assert y.creator.input.creator.input.creator.input == x
+
+#逆伝播（変数yのbackwardメソッドを呼べば、自動で逆伝搬が行われることを確認）
+y.grad = np.array(1.0)
+y.backward()
+print(x.grad)
