@@ -78,19 +78,12 @@ def numerical_diff(f, x, eps=1e-4):
     y1 = f(x1)
     return (y1.data - y0.data) / (2 * eps)
 
-# A = Square()
-# B = Exp()
-# C = Square()
 
-x = Variable(np.array(0.5))
+# x = Variable(np.array(0.5))
 # x = Variable(None) #test
 # x = Variable(1.0) #test
-# a = square(x)
-# b = exp(a)
-# y = square(b)
 y = square(exp(square(x)))
 
 #逆伝播（変数yのbackwardメソッドを呼べば、自動で逆伝搬が行われることを確認）
-# y.grad = np.array(1.0) # Simpty set the gradient of the output variable y to 1
 y.backward()
 print(x.grad)
