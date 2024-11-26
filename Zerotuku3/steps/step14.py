@@ -33,6 +33,9 @@ class Variable:
                 
                 if x.creator is not None:
                     funcs.append(x.creator)
+    
+    def cleargrad(self):
+        self.grad = None
 
                 
 def as_array(x):
@@ -94,5 +97,11 @@ y = add(x,add(x, x))
 # y = square(x)
 print('y.data:', y.data)
 
+y.backward()
+print('x.grad:', x.grad)
+
+print("同じ計算を実行（微分の値リセット確認）")
+y = add(x,add(x, x))
+x.cleargrad()
 y.backward()
 print('x.grad:', x.grad)
