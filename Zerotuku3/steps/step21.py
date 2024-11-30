@@ -175,15 +175,26 @@ class Mul(Function):
         return gy * x1, gy * x0
 
 def mul(x0, x1):
+    x1 = as_array(x1)
     return Mul()(x0, x1)
 
 # 演算子のオーバーロード
 Variable.__add__ = add
+Variable.__radd__ = add
 Variable.__mul__ = mul
+Variable.__rmul__ = mul
 
 x = Variable(np.array(2.0))
 y = x + np.array(3.0)
 print(y) #ndarrayとVariableの足し算ができるようになる。
 
 y1 = x + 3.0
-print(y1) #floatとVariableの足し算ができるようになる。
+print(y1) #floatとVariableの足し算ができるようになる。(add)
+
+y2 = 3.0 + x
+print(y2) #右辺がクラスのインスタンスの場合も可能（radd）
+
+print('-----------------')
+y3 = x * 3.0
+y4 = 3 * x
+print(y3, y4) #mul
