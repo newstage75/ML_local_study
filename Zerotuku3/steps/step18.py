@@ -1,5 +1,15 @@
 import weakref
 import numpy as np
+import contextlib # contextlibを追加
+
+@contextlib.contextmanager
+def using_config(name, value):
+    old_value = getattr(Config, name)
+    setattr(Config, name, value)
+    try:
+        yield
+    finally:
+        setattr(Config, name, old_value)
 
 class Variable:
     def __init__(self, data):
@@ -116,10 +126,9 @@ class Add(Function):
 def add(x0, x1):
     return Add()(x0, x1)
 
+def no_grad():
+    return using_config('enable_backprop', False)
 
-Config.enable_backprop = True
-x = Variable(np.ones((100, 100, 100)))
-y = square(square(square(x)))
-# この逆伝搬を行う場合は、enable_backpropをTrueにする必要がある。
-# Falseの場合、途中の計算結果は使用されたあとにリセットされる。
-y.backward() 
+with no_grad():
+    x = Variable(np.array(2.0))
+    y = square(x)
