@@ -22,6 +22,8 @@ def no_grad():
 
 
 class Variable:
+    __array_priority__ = 200
+    
     def __init__(self, data, name=None):
         if data is not None:
             if not isinstance(data, np.ndarray):
@@ -198,3 +200,7 @@ print('-----------------')
 y3 = x * 3.0
 y4 = 3 * x
 print(y3, y4) #mul
+
+print('-----------------')
+y5 = np.array([2.0]) + x
+print(y5) #ndarrayとVariableの足し算ができるようになる。
