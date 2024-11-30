@@ -161,6 +161,7 @@ class Add(Function):
         return gy, gy
 
 def add(x0, x1):
+    x1 = as_array(x1)
     return Add()(x0, x1)
 
 
@@ -183,3 +184,6 @@ Variable.__mul__ = mul
 x = Variable(np.array(2.0))
 y = x + np.array(3.0)
 print(y) #ndarrayとVariableの足し算ができるようになる。
+
+y1 = x + 3.0
+print(y1) #floatとVariableの足し算ができるようになる。
