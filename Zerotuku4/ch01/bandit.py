@@ -87,3 +87,11 @@ class Agent:
 # 例 x = [2, 5, 1] だと
 # max(x) = 5（最大値）
 # argmax(x) = 1（5 は インデックス 1 にある）
+
+# Agentクラスをテストしてみる（独習）
+# agent = Agent(0.1, 10)
+# for i in range(10):
+#     action = agent.get_action()
+#     reward = bandit.play(action)
+#     agent.update(action, reward)
+# print(agent.Qs) #実行結果の１例 [0.75 0.   1.   0.   0.   0.   0.   0.   0.   0.  ]
